@@ -1,2 +1,2 @@
-mineru[full]
+mineru[pipeline]
 pika>=1.3.2
