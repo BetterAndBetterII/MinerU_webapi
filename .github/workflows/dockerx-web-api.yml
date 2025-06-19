@@ -2,9 +2,7 @@ name: Docker Build Image-WebAPI
 
 on:
   push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
@@ -42,7 +40,7 @@ jobs:
         registry: ${{ vars.DOCKER_REGISTRY }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
