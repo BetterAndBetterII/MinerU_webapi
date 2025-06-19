@@ -205,7 +205,9 @@ def main():
     host = os.getenv("RABBITMQ_HOST", "localhost")
     queue = os.getenv("RABBITMQ_QUEUE", "mineru_parse_queue")
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host))
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host=host, heartbeat=1200)
+    )
     channel = connection.channel()
     channel.queue_declare(queue=queue, durable=True)
     channel.basic_qos(prefetch_count=1)
