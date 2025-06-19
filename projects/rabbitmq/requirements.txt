@@ -1,0 +1,2 @@
+mineru[full]
+pika>=1.3.2
