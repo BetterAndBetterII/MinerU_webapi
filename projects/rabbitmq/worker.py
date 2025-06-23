@@ -208,7 +208,7 @@ def handle_message(ch, method, properties, body):
         logger.info(f"Message processed and acknowledged for file: {file_name}")
 
     except Exception as e:
-        logger.error(f"Failed to process message: {e}")
+        logger.exception(f"Failed to process message: {e}")
         ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
     finally:
         shutil.rmtree(temp_dir)
