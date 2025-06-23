@@ -23,6 +23,12 @@ pdf_extensions = [".pdf"]
 office_extensions = [".ppt", ".pptx", ".doc", ".docx"]
 image_extensions = [".png", ".jpg", ".jpeg"]
 
+
+def encode_image(image_path: str) -> str:
+    """Encode image using base64"""
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
 def init_writers(
     file_path: Optional[str] = None,
     output_path: Optional[str] = None,
@@ -171,6 +177,14 @@ def handle_message(ch, method, properties, body):
             "md": md_content,
             "content_list": content_list,
             "middle_json": middle_json,
+        }
+
+        image_paths = glob(f"{output_image_path}/*.jpg")
+        result_message["images"] = {
+            os.path.basename(
+                image_path
+            ): f"data:image/jpeg;base64,{encode_image(image_path)}"
+            for image_path in image_paths
         }
 
         # Add correlation_id to result message if it was provided
