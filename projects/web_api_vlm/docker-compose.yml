@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web_api_vlm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web_api_vlm
+    ports:
+      - "8888:8000"
+    volumes:
+      # Mount the output directory
+      - ./output:/app/output
+      # Mount config file for easy modification
+      - ./mineru.json:/root/mineru.json
+    environment:
+      - HF_HOME=/opt/models
+      # Uncomment the line below if you have trouble downloading models from Hugging Face
+      # - MINERU_MODEL_SOURCE=modelscope
+    command: ["--host", "0.0.0.0", "--port", "8000", "--reload"]
