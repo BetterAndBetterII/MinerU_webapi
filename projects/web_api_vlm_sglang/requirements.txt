@@ -1,5 +1,0 @@
-mineru[all]
-
-fastapi
-uvicorn
-python-multipart
