@@ -51,6 +51,7 @@ RUN apt-get update && \
 
 # Copy the app and its configuration file
 COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 COPY mineru.json /root/mineru.json
 COPY app.py /app/app.py
 
