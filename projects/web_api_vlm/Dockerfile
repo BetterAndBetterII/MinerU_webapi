@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.1.1-devel-ubuntu22.04 AS build
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
 WORKDIR /app
 
@@ -15,7 +15,10 @@ RUN apt-get update && \
         build-essential \
         python3.10 \
         python3.10-venv \
-        python3-pip && \
+        python3-pip \
+        libgl1 \
+        libglib2.0-0 \
+        libgomp1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s /usr/bin/python3.10 /usr/bin/python
@@ -31,23 +34,6 @@ RUN python -m venv /app/venv && \
 RUN . /app/venv/bin/activate && \
     export HF_HOME=/opt/models && \
     python -m mineru.cli.models_download --source huggingface --model_type vlm
-
-FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 AS prod
-
-# Copy Python dependencies and models from the build stage
-COPY --from=build /app/venv /app/venv
-COPY --from=build /opt/models /opt/models
-COPY --from=build /opt/models /opt/models
-
-# Update the package list and install necessary packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        libgl1 \
-        libglib2.0-0 \
-        libgomp1 \
-        python3.10 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Copy the app and its configuration file
 COPY entrypoint.sh /app/entrypoint.sh
