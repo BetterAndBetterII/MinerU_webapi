@@ -1,4 +1,4 @@
-mineru[all]
+mineru[core]
 
 fastapi
 uvicorn

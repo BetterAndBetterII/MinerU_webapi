@@ -30,7 +30,7 @@ RUN python -m venv /app/venv && \
 # Download models
 RUN . /app/venv/bin/activate && \
     export HF_HOME=/opt/models && \
-    python -m mineru.cli.models_download --source huggingface --model_type all
+    python -m mineru.cli.models_download --source huggingface --model_type vlm
 
 FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 AS prod
 
