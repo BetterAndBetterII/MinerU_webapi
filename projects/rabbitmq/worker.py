@@ -174,7 +174,7 @@ def handle_message(ch, method, properties, body):
         result_queue = os.getenv("RABBITMQ_RESULT_QUEUE", "mineru_results_queue")
         result_message = {
             "file_name": file_name,
-            "md": md_content,
+            "md_content": md_content,
             "content_list": content_list,
             "middle_json": middle_json,
         }
